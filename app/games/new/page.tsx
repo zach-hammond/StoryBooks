@@ -1,6 +1,7 @@
 export default function Page() {
     return (
         <form action="/api/games" method="post">
+            <h1>New Game</h1>
             <div>
                 <label htmlFor="title">Title:</label>
                 <input type="text" id="title" name="title"/>

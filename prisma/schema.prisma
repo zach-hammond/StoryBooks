@@ -11,17 +11,28 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String
-  pwd   String
-  games Game[]
+  id     Int     @id @default(autoincrement())
+  email  String  @unique
+  name   String
+  pwd    String
+  games  Game[]
+  wagers Wager[]
 }
 
 model Game {
-  id        Int     @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   title     String
-  private   Boolean @default(false)
-  owner     User    @relation(fields: [ownerId], references: [id])
+  private   Boolean  @default(false)
+  owner     User     @relation(fields: [ownerId], references: [id])
   ownerId   Int
+  wagers    Wager[]
+}
+
+model Wager {
+  id        Int  @id @default(autoincrement())
+  amount    Int
+  user      User @relation(fields: [userId], references: [id])
+  userId    Int
+  game      Game @relation(fields: [gameId], references: [id])
+  gameId    Int
 }

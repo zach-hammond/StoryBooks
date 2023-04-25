@@ -3,12 +3,12 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 class GameService {
-    async addGame(title: string, privateGame: boolean) {
+    async addGame(title: string, privateGame: boolean, userId: number) {
         const game = prisma.game.create({
             data: {
                 title: title,
                 private: privateGame,
-                ownerId: 1
+                ownerId: userId
             },
         });
         game.then(async () => {
@@ -29,6 +29,23 @@ class GameService {
             await prisma.$disconnect()
         });
         return games;
+    }
+
+    async addWager(userId: number, gameId: number, amount: number) {
+        const wager = prisma.wager.create({
+            data: {
+                userId: userId,
+                gameId: gameId,
+                amount: amount
+            },
+        });
+        wager.then(async () => {
+            await prisma.$disconnect()
+        }).catch(async (e) => {
+            console.error(e)
+            await prisma.$disconnect()
+        });
+        return wager
     }
 }
 
