@@ -1,4 +1,5 @@
-import NextAuth from "next-auth";
+import prisma from "@/lib/prisma";
+import NextAuth, {User} from "next-auth";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -8,20 +9,25 @@ const authOptions: NextAuthOptions = {
   },
   providers: [
     CredentialsProvider({
-      name: "Sign in",
+      id: 'username',
+      name: 'Storybooks login',
       credentials: {
-        email: {
-          label: "Email",
-          type: "email",
-          placeholder: "example@example.com",
-        },
-        password: { label: "Password", type: "password" },
+          email: { label: 'Email', type: 'text' },
+          password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials) {
-        const user = { id: "1", name: "Admin", email: "admin@admin.com" };
-        return user;
+      async authorize(credentials): Promise<User | null> {
+          if (!credentials) {
+              return null;
+          }
+
+          const data = await prisma.user.findFirst({  where: { email: credentials.email, pwd: credentials.password }
+        });
+          if (data) {
+              return data as unknown as User;
+          }
+          return null;
       },
-    }),
+  }),
   ],
 };
 
