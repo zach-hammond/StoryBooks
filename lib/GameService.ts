@@ -31,12 +31,13 @@ class GameService {
         return games;
     }
 
-    async addWager(userId: number, gameId: number, amount: number) {
+    async addWager(userId: number, gameId: number, amount: number, outcome: boolean) {
         const wager = prisma.wager.create({
             data: {
                 userId: userId,
                 gameId: gameId,
-                amount: amount
+                amount: amount,
+                outcome: outcome
             },
         });
         wager.then(async () => {

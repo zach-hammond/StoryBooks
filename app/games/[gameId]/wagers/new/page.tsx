@@ -5,9 +5,13 @@ export default function Page({params,}: { params: { gameId: string } }) {
             <div>
                 <label htmlFor="amount">Amount:</label>
                 <input type="text" id="amount" name="amount"/>
-                <input type="hidden" id="gameId" name="gameId" value={params.gameId}/>
             </div>
             <div>
+                <label htmlFor="outcome">Outcome:</label>
+                <input type="checkbox" id="outcome" name="outcome"/>
+            </div>
+            <div>
+                <input type="hidden" id="gameId" name="gameId" value={params.gameId}/>
                 <button type="submit">Create</button>
             </div>
         </form>

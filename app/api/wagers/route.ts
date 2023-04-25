@@ -7,6 +7,7 @@ export async function POST(request: NextRequest) {
     const userId = 1 // TODO: get user from session
     const gameId = parseInt(form.get('gameId'));
     const amount = parseInt(form.get('amount'));
-    await GameService.addWager(userId, gameId, amount);
+    const outcome = form.get('privateGame')
+    await GameService.addWager(userId, gameId, amount, !!outcome);
     redirect('/games/' + gameId);
 }
