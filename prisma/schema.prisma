@@ -13,14 +13,13 @@ datasource db {
 model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
-  name  String?
+  name  String
   games Game[]
 }
 
 model Game {
   id        Int     @id @default(autoincrement())
   title     String
-  content   String?
   private   Boolean @default(false)
   owner     User    @relation(fields: [ownerId], references: [id])
   ownerId   Int

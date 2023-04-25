@@ -1,13 +1,13 @@
 export default function Page() {
     return (
-        <form action="/api/games" method="POST">
+        <form action="/api/games" method="post">
             <div>
                 <label htmlFor="title">Title:</label>
                 <input type="text" id="title" name="title"/>
             </div>
             <div>
-                <label htmlFor="private">Private game:</label>
-                <input type="checkbox" id="private" name="private"/>
+                <label htmlFor="privateGame">Private game:</label>
+                <input type="checkbox" id="privateGame" name="privateGame"/>
             </div>
             <div>
                 <button type="submit">Create</button>
