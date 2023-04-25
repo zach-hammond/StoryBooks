@@ -20,6 +20,28 @@ class GameService {
         return game
     }
 
+    async getGame(gameId:number) {
+        const game = prisma.game.findUnique({
+            where: {
+                id: gameId,
+            },
+            include: {
+                wagers: {
+                    include: {
+                        user: true
+                    }
+                },
+            },
+        });
+        game.then(async () => {
+            await prisma.$disconnect()
+        }).catch(async (e) => {
+            console.error(e)
+            await prisma.$disconnect()
+        });
+        return game
+    }
+
     async listGames() {
         const games = prisma.game.findMany();
         games.then(async () => {
