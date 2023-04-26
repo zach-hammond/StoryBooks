@@ -30,11 +30,12 @@ model Game {
 }
 
 model Wager {
-  id        Int  @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   amount    Int
   outcome   Boolean
-  user      User @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
   userId    Int
-  game      Game @relation(fields: [gameId], references: [id])
+  game      Game     @relation(fields: [gameId], references: [id])
   gameId    Int
+  payout    Float?
 }

@@ -23,8 +23,14 @@ const authOptions: NextAuthOptions = {
           }
           return null;
       },
-  }),
+    }),
   ],
+  callbacks: {
+    async session({ session, user, token }) {
+        session.user.id = token.sub;
+        return session;
+    },
+  }
 };
 
 const handler = NextAuth(authOptions);

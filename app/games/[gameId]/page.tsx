@@ -1,5 +1,6 @@
 import Link from "next/link";
 import GameService from "@/lib/GameService";
+import CloseGame from "@/app/games/[gameId]/CloseGame";
 
 export default async function Page({params,}: { params: { gameId: string } }) {
     const game = await GameService.getGame(parseInt(params.gameId));
@@ -19,15 +20,19 @@ export default async function Page({params,}: { params: { gameId: string } }) {
             <div>
                 Current odds: {totalFalse}/{totalTrue}
             </div>
+            <div>
+                Outcome: {game.outcome != null ? (game.outcome ? 'Yes' : 'No') : ''}
+            </div>
             <table>
                 {game.wagers.map(w => (
-                    <tr>
+                    <tr key={w.id}>
                         <td>{w.user.name}</td>
                         <td>{w.outcome ? 'Yes' : 'No'}</td>
                         <td>{w.amount}</td>
                     </tr>
                 ))}
             </table>
+            <CloseGame game={game}/>
         </div>
     );
 }
