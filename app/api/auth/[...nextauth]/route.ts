@@ -1,12 +1,9 @@
-import prisma from "@/lib/prisma";
+import type {NextAuthOptions} from "next-auth";
 import NextAuth, {User} from "next-auth";
-import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import UserService from "@/lib/UserService";
 
 const authOptions: NextAuthOptions = {
-  session: {
-    strategy: "jwt",
-  },
   providers: [
     CredentialsProvider({
       id: 'username',
@@ -20,8 +17,7 @@ const authOptions: NextAuthOptions = {
               return null;
           }
 
-          const data = await prisma.user.findFirst({  where: { email: credentials.email, pwd: credentials.password }
-        });
+          const data = await UserService.authenticate(credentials.email, credentials.password);
           if (data) {
               return data as unknown as User;
           }

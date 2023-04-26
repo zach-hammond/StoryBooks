@@ -4,24 +4,17 @@ const prisma = new PrismaClient()
 
 class GameService {
     async addGame(title: string, privateGame: boolean, userId: number) {
-        const game = prisma.game.create({
+        return prisma.game.create({
             data: {
                 title: title,
                 private: privateGame,
                 ownerId: userId
             },
         });
-        game.then(async () => {
-            await prisma.$disconnect()
-        }).catch(async (e) => {
-            console.error(e)
-            await prisma.$disconnect()
-        });
-        return game
     }
 
     async getGame(gameId:number) {
-        const game = prisma.game.findUnique({
+        return prisma.game.findUnique({
             where: {
                 id: gameId,
             },
@@ -33,28 +26,14 @@ class GameService {
                 },
             },
         });
-        game.then(async () => {
-            await prisma.$disconnect()
-        }).catch(async (e) => {
-            console.error(e)
-            await prisma.$disconnect()
-        });
-        return game
     }
 
     async listGames() {
-        const games = prisma.game.findMany();
-        games.then(async () => {
-            await prisma.$disconnect()
-        }).catch(async (e) => {
-            console.error(e)
-            await prisma.$disconnect()
-        });
-        return games;
+        return prisma.game.findMany();
     }
 
     async addWager(userId: number, gameId: number, amount: number, outcome: boolean) {
-        const wager = prisma.wager.create({
+        return prisma.wager.create({
             data: {
                 userId: userId,
                 gameId: gameId,
@@ -62,13 +41,6 @@ class GameService {
                 outcome: outcome
             },
         });
-        wager.then(async () => {
-            await prisma.$disconnect()
-        }).catch(async (e) => {
-            console.error(e)
-            await prisma.$disconnect()
-        });
-        return wager
     }
 }
 
