@@ -29,6 +29,7 @@ export default async function Page({params,}: { params: { gameId: string } }) {
                         <td>{w.user.name}</td>
                         <td>{w.outcome ? 'Yes' : 'No'}</td>
                         <td>{w.amount}</td>
+                        <td>{w.payout ? (Math.round(w.payout * 100) / 100).toFixed(2) : ''}</td>
                     </tr>
                 ))}
             </table>

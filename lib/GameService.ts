@@ -29,7 +29,11 @@ class GameService {
     }
 
     async listGames() {
-        return prisma.game.findMany();
+        return prisma.game.findMany({
+            include: {
+                wagers: true
+            }
+        });
     }
 
     async addWager(userId: number, gameId: number, amount: number, outcome: boolean) {
@@ -69,7 +73,8 @@ class GameService {
         }
         for (const wager of wagers) {
             const payout = wager.outcome == outcome ?
-                (wager.outcome ? wager.amount / totalTrue * totalFalse : wager.amount / totalFalse * totalTrue) : 0;
+                (wager.outcome ? wager.amount / totalTrue * totalFalse : wager.amount / totalFalse * totalTrue) :
+                wager.amount * -1;
             await prisma.wager.update({
                 where: {
                     id: wager.id
