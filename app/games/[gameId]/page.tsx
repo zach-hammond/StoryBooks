@@ -16,14 +16,24 @@ export default async function Page({params,}: { params: { gameId: string } }) {
     return (
         <div>
             <h1>{game.title}</h1>
-            <Link href={"/games/" + params.gameId + "/wagers/new"}>New Wager</Link>
+            {game.outcome == null && (
+                <Link href={"/games/" + params.gameId + "/wagers/new"}><button>New Wager</button></Link>
+            )}
             <div>
                 Current odds: {totalFalse}/{totalTrue}
             </div>
             <div>
                 Outcome: {game.outcome != null ? (game.outcome ? 'Yes' : 'No') : ''}
             </div>
+            <hr/>
+            <div>Wagers</div>
             <table>
+                <tr>
+                    <th>User</th>
+                    <th>Outcome</th>
+                    <th>Amount</th>
+                    <th>Payout</th>
+                </tr>
                 {game.wagers.map(w => (
                     <tr key={w.id}>
                         <td>{w.user.name}</td>

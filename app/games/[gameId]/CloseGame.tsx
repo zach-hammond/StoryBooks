@@ -7,6 +7,7 @@ export default function CloseGame({ game }: { game: any }) {
     if (game?.ownerId == session?.user.id && game?.outcome == null) {
         return (
             <div>
+                <hr/>
                 <form action={"/api/games/" + game.id} method="post">
                     <h1>Close Game</h1>
                     <div>
